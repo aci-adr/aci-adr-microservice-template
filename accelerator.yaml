@@ -4,6 +4,8 @@ accelerator:
   iconUrl: https://raw.githubusercontent.com/aci-adr/icon-packs/main/aci_worldwide_logo.jpeg
   tags:
     - GO
+    - microservice
+    - gin
     - open-telemetry
     - Logging
     - MongoDB
