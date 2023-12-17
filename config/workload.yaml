@@ -1,0 +1,29 @@
+apiVersion: carto.run/v1alpha1
+kind: Workload
+metadata:
+  name: "aci-adr-{{STAGE_NAME}}"
+  namespace: aks-eks-dev
+  labels:
+    apps.tanzu.vmware.com/has-tests: "true"
+    apps.tanzu.vmware.com/workload-type: web
+    app.kubernetes.io/part-of: "aci-adr-{{STAGE_NAME}}"
+spec:
+  env:
+    - name: MONGODB_URI
+      valueFrom:
+        secretKeyRef:
+          name: mongo-config
+          key: MONGODB_URI
+    - name: DB_NAME
+      value: "{{DB_NAME}}"
+    - name: OTEL_EXPORTER_OTLP_METRICS_ENDPOINT 
+      value: "{{OTEL_EXPORTER_OTLP_METRICS_ENDPOINT}}"
+    - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT 
+      value: "{{OTEL_EXPORTER_OTLP_TRACES_ENDPOINT}}"
+    - name: OTEL_SERVICE_NAME 
+      value: "{{STAGE_NAME}}"
+  source:
+    git:
+      url: https://github.com/aci-adr/aci-adr-{{STAGE_NAME}}.git
+      ref:
+        branch: main

@@ -1,0 +1,48 @@
+accelerator:
+  displayName: ACI microservice template
+  description: Contains generic application structure, sample api and necessary reusable components for microservice in GO
+  iconUrl: https://raw.githubusercontent.com/aci-adr/icon-packs/main/aci_worldwide_logo.jpeg
+  tags:
+    - GO
+    - open-telemetry
+    - Logging
+    - MongoDB
+  options:
+    - name: dbName
+      label: Database Name
+      inputType: text
+      defaultValue: fx_data
+      required: true
+    - name: stageName
+      label: Application Name
+      inputType: text
+      defaultValue: fx-service
+      required: true
+    - name: tracesEndpoint
+      label: Open Telemetry Traces Exporter Endpoint
+      inputType: text
+      defaultValue: "http://10.0.152.104:4317"
+      required: true
+    - name: metricsEndpoint
+      label: Open Telemetry Metrics Exporter Endpoint
+      inputType: text
+      defaultValue: "http://10.0.152.104:4317"
+      required: true
+# Place this after the `options` section from the previous step
+engine:
+  merge:
+    - include: ["**"]
+    - include: ["**/workload.yaml"]
+      chain:
+        - type: ReplaceText
+          substitutions:
+            - text: "{{DB_NAME}}"
+              with: "#dbName"
+            - text: "{{STAGE_NAME}}"
+              with: "#stageName"
+            - text: "{{STAGE_NAME}}"
+              with: "#stageName"
+            - text: "{{OTEL_EXPORTER_OTLP_METRICS_ENDPOINT}}"
+              with: "#metricsEndpoint"
+            - text: "{{OTEL_EXPORTER_OTLP_TRACES_ENDPOINT}}"
+              with: "#tracesEndpoint"
