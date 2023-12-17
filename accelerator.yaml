@@ -42,8 +42,6 @@ engine:
               with: "#dbName"
             - text: "{{STAGE_NAME}}"
               with: "#stageName"
-            - text: "{{STAGE_NAME}}"
-              with: "#stageName"
             - text: "{{OTEL_EXPORTER_OTLP_METRICS_ENDPOINT}}"
               with: "#metricsEndpoint"
             - text: "{{OTEL_EXPORTER_OTLP_TRACES_ENDPOINT}}"
